@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <RootNamespace>PAP3N_DOTNET</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Version>0.0.1</Version>
+        <Title>PAP3N-DOTNET</Title>
+        <Description>Library to interact with Winctrl PAP 3N (737 MCP) Device</Description>
+        <Copyright>None</Copyright>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="HidSharp" Version="2.6.4" />
+    </ItemGroup>
+
+</Project>
