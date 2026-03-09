@@ -1,4 +1,6 @@
-﻿public class Example
+﻿namespace PAP3N_DOTNET;
+
+public class Example
 {
     public static void Main(string[] args)
     {
@@ -12,6 +14,12 @@
         var mcp = new PAP3N(device);
         mcp.connect();
 
+        mcp.B_BNK_SEL_10.onChange += b => {if (b) {Console.WriteLine("10");}};
+        mcp.B_BNK_SEL_15.onChange += b => {if (b) {Console.WriteLine("15");}};
+        mcp.B_BNK_SEL_20.onChange += b => {if (b) {Console.WriteLine("20");}};
+        mcp.B_BNK_SEL_25.onChange += b => {if (b) {Console.WriteLine("25");}};
+        mcp.B_BNK_SEL_30.onChange += b => {if (b) {Console.WriteLine("30");}};
+        
         bool N1 = false, SPEED = false, LVL_CHANGE = false, VNAV = false;
         mcp.B_N1.onChange += b => mcp.N1.setVal(N1 ^= b); 
         mcp.B_SPEED.onChange += b => mcp.SPEED.setVal(SPEED ^= b); 

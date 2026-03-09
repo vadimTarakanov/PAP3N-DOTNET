@@ -2,7 +2,8 @@
 
 public class PAP3N
 {
-     private static int PAP3_PRODUCT_ID = 0xbf0f;
+     private string lastReport = "";
+     private const int PAP3_PRODUCT_ID = 0xbf0f;
 
      
      public class Out(byte[] ON, byte[] OFF, Action<byte[]>? hidOut = null)
@@ -272,6 +273,11 @@ public class PAP3N
      public Button B_AT_ARM_ON = new(6, 1);
      public Button B_AP_DISENGAGE = new(5, 7);
      public Button B_R_FD_ON = new(4, 2);
+     public Button B_BNK_SEL_10 = new(5, 6);
+     public Button B_BNK_SEL_15 = new(5, 5);
+     public Button B_BNK_SEL_20 = new(5, 4);
+     public Button B_BNK_SEL_25 = new(5, 3);
+     public Button B_BNK_SEL_30 = new(5, 2);
      private Button[] BUTTONS;
 
      public record Knob(int highByteOffset, int lowByteOffset)
@@ -373,7 +379,8 @@ public class PAP3N
         [
              B_N1, B_SPEED, B_VNAV, B_LVL_CHG, B_HDG_SEL, B_LNAV, B_VOR_LOC, B_APP, B_ALT_HOLD, B_VS, B_CMD_1,
              B_CWS_1,
-             B_CMD_2, B_CSW_2, B_IAS_MACH_CO, B_SPD_INTV, B_ALT_INTV, B_L_FD_ON, B_AT_ARM_ON, B_AP_DISENGAGE, B_R_FD_ON
+             B_CMD_2, B_CSW_2, B_IAS_MACH_CO, B_SPD_INTV, B_ALT_INTV, B_L_FD_ON, B_AT_ARM_ON, B_AP_DISENGAGE, B_R_FD_ON,
+             B_BNK_SEL_10, B_BNK_SEL_15, B_BNK_SEL_20, B_BNK_SEL_25, B_BNK_SEL_30
         ];
 
         KNOBS =
@@ -491,7 +498,6 @@ public class PAP3N
           }
      }
 
-     private string lastReport = "";
      private void onReportAvailable()
      {
           if (input[0] == 0x1)
@@ -508,10 +514,10 @@ public class PAP3N
                     knob.setVal(val);
                }
 
-               /*var inputReportDump = string.Join("|", INPUT.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
+               /*var inputReportDump = string.Join("|", input.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
                if (inputReportDump != lastReport)
                {
-                    Console.WriteLine($"{inputReportDump.Substring(0, 250)}");
+                    Console.WriteLine($"{inputReportDump.Substring(0, 250)}...");
                     lastReport = inputReportDump;
                }*/
           }

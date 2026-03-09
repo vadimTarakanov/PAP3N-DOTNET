@@ -5,10 +5,14 @@
         <RootNamespace>PAP3N_DOTNET</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>0.0.1</Version>
+        <Version>0.0.3</Version>
         <Title>PAP3N-DOTNET</Title>
         <Description>Library to interact with Winctrl PAP 3N (737 MCP) Device</Description>
         <Copyright>None</Copyright>
+        <PackageProjectUrl></PackageProjectUrl>
+        <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/vadimTarakanov/PAP3N-DOTNET</RepositoryUrl>
+        <Authors>Vadim Tarakanov</Authors>
     </PropertyGroup>
 
     <ItemGroup>
