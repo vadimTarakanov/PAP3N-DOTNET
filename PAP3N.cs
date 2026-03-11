@@ -8,19 +8,15 @@ public class PAP3N
      
      public class Out(byte[] ON, byte[] OFF, Action<byte[]>? hidOut = null)
      {
-          public byte[] on = ON;
-          public byte[] off = OFF;
+          private byte[] on = ON;
+          private byte[] off = OFF;
           private bool? val;
 
           public void setVal(bool newVal)
           {
                if (newVal != val)
                {
-                    if (newVal)
-                         hidOut?.Invoke(on);
-                    else
-                         hidOut?.Invoke(off);
-
+                    hidOut?.Invoke(newVal ? on : off);
                     val = newVal;
                }
           }
@@ -44,7 +40,6 @@ public class PAP3N
      public Out MASTER_L;
      public Out MASTER_R;
      public Out SOLENOID;
-     public Out[] LEDS;
 
      public abstract class SegmentedDisplay()
      {
@@ -216,7 +211,7 @@ public class PAP3N
      private SevenSegmentDisplay HDG_DIGIT_0 = new([29, 3], [25, 3], [21, 3], [17, 3], [13, 3], [9, 3], [5, 3]);
      private SevenSegmentDisplay HDG_DIGIT_1 = new([29, 2], [25, 2], [21, 2], [17, 2], [13, 2], [9, 2], [5, 2]);
      private SevenSegmentDisplay HDG_DIGIT_2 = new([29, 1], [25, 1], [21, 1], [17, 1], [13, 1], [9, 1], [5, 1]);
-     private CompositeDisplay HDG_DISPLAY;
+     public CompositeDisplay HDG_DISPLAY;
      private Marker HDG_MARKER = new( [29, 4], [25, 4]);
      private Marker TRK_MARKER = new([21, 4], [17, 4]);
      
@@ -463,10 +458,6 @@ public class PAP3N
              [0x02, 0x0f, 0xbf, 0x00, 0x00, 0x03, 0x49, 0x1e, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00],
              [0x02, 0x0f, 0xbf, 0x00, 0x00, 0x03, 0x49, 0x1e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
              sendToDevice);
-        LEDS =
-        [
-             N1, SPEED, APP, VS, ALT_HOLD, AT_ARM, CMDA, CMDB, CWSA, CWSB, HDG_SEL, LNAV, LVL_CHG, MASTER_L, MASTER_R, VNAV, VOR_LOC
-        ];
      }
 
      public void connect()
