@@ -4,7 +4,7 @@ public class PAP3N
 {
      private string lastReport = "";
      private const int PAP3_PRODUCT_ID = 0xbf0f;
-
+     private bool debug = false;
      
      public class Out(byte[] ON, byte[] OFF, Action<byte[]>? hidOut = null)
      {
@@ -264,10 +264,10 @@ public class PAP3N
      public Button B_IAS_MACH_CO = new(2, 1);
      public Button B_SPD_INTV = new(2, 0);
      public Button B_ALT_INTV = new(3, 7);
-     public Button B_L_FD_ON = new(4, 3);
+     public Button B_L_FD_ON = new(4, 4);
      public Button B_AT_ARM_ON = new(6, 1);
      public Button B_AP_DISENGAGE = new(5, 7);
-     public Button B_R_FD_ON = new(4, 2);
+     public Button B_R_FD_ON = new(4, 3);
      public Button B_BNK_SEL_10 = new(5, 6);
      public Button B_BNK_SEL_15 = new(5, 5);
      public Button B_BNK_SEL_20 = new(5, 4);
@@ -355,8 +355,9 @@ public class PAP3N
           return DeviceList.Local.GetHidDevices(null, PAP3_PRODUCT_ID).ToList();
      }
      
-     public PAP3N(HidDevice device)
+     public PAP3N(HidDevice device, bool debug = false)
      {
+        this.debug = debug;
         this.device = device;
         ArgumentNullException.ThrowIfNull(device);
         if (device.ProductID.CompareTo(PAP3_PRODUCT_ID) != 0)
@@ -505,12 +506,15 @@ public class PAP3N
                     knob.setVal(val);
                }
 
-               /*var inputReportDump = string.Join("|", input.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
-               if (inputReportDump != lastReport)
+               if (debug)
                {
-                    Console.WriteLine($"{inputReportDump.Substring(0, 250)}...");
-                    lastReport = inputReportDump;
-               }*/
+                    var inputReportDump = string.Join("|", input.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
+                    if (inputReportDump != lastReport)
+                    {
+                         Console.WriteLine($"{inputReportDump.Substring(0, 250)}...");
+                         lastReport = inputReportDump;
+                    }
+               }
           }
      }
 
@@ -518,10 +522,11 @@ public class PAP3N
      {
           // Start with blank displays
           var data = BLANK_DISPLAY_HID_REPORT;
-          
+
           // Write out all output
           CRS_L_DISPLAY.writeString(data, 25);
           IAS_DISPLAY.writeString(data, 25);
+          HDG_DISPLAY.writeString(data, 25);
           ALT_DISPLAY.writeString(data, 25);
           VS_DISPLAY.writeString(data, 25);
           CRS_R_DISPLAY.writeString(data, 25);
